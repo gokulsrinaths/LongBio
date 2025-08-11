@@ -1,3 +1,7 @@
+const typography = require('@tailwindcss/typography');
+const forms = require('@tailwindcss/forms');
+const aspectRatio = require('@tailwindcss/aspect-ratio');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,19 +12,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue: {
-          600: '#2563eb',
-          700: '#1d4ed8',
-        },
-        gray: {
-          50: '#f9fafb',
-          100: '#f3f4f6',
-          200: '#e5e7eb',
-          600: '#4b5563',
-          900: '#111827',
+        'primary-navy': {
+          50: '#F0F4F8',
+          100: '#D9E2EC',
+          200: '#BCCCDC',
+          300: '#9FB3C8',
+          400: '#829AB1',
+          500: '#627D98',
+          600: '#486581',
+          700: '#334E68',
+          800: '#243B53',
+          900: '#102A43',
         },
       },
     },
   },
-  plugins: [],
-} 
+  plugins: [
+    typography,
+    forms,
+    aspectRatio,
+  ],
+}

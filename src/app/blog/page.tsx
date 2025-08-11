@@ -1,141 +1,151 @@
-import React from 'react'
-import Link from 'next/link'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+'use client';
 
-export default function BlogPage() {
-  const featuredPosts = [
-    {
-      title: 'The Future of Aging: A Comprehensive Review',
-      author: 'Dr. Sarah Chen',
-      date: 'March 15, 2024',
-      excerpt: 'An in-depth look at the current state of longevity research and what the future holds for human lifespan extension.',
-      image: '/blog/aging-future.jpg',
-      readTime: '12 min read',
-      category: 'Research',
-    },
-    {
-      title: 'Breakthrough in Cellular Regeneration',
-      author: 'Prof. Michael Roberts',
-      date: 'March 10, 2024',
-      excerpt: 'New research reveals promising pathways for cellular regeneration and tissue repair.',
-      image: '/blog/cellular-regen.jpg',
-      readTime: '8 min read',
-      category: 'Science',
-    },
-    {
-      title: 'The Ethics of Life Extension',
-      author: 'Dr. Emily Thompson',
-      date: 'March 5, 2024',
-      excerpt: 'Exploring the ethical implications and societal impact of radical life extension technologies.',
-      image: '/blog/ethics.jpg',
-      readTime: '15 min read',
-      category: 'Ethics',
-    },
-  ]
+import { motion } from 'framer-motion';
+import PageLayout from '@/components/PageLayout';
+import Script from 'next/script';
 
-  const categories = [
-    'All',
-    'Research',
-    'Science',
-    'Ethics',
-    'Technology',
-    'Industry',
-    'Policy',
-  ]
+interface BlogPost {
+  title: string;
+  description: string;
+  author: string;
+  link: string;
+}
 
+const blogPosts: BlogPost[] = [
+  {
+    title: "The Business of Promoting Longevity and Healthspan",
+    description: "A crop of new consumer-facing companies with unconventional data collection",
+    author: "Eric Topol",
+    link: "https://erictopol.substack.com/p/the-business-of-promoting-longevity"
+  },
+  {
+    title: "The Longevity Balancing Act: From Biohacking to Being Human",
+    description: "Why the real biohack isn't another protocol - it's learning to live fully while you optimize for longevity.",
+    author: "Ryan Frankel",
+    link: "https://ryanfrankel.substack.com/p/the-longevity-balancing-act-from"
+  },
+  {
+    title: "Are Longevity Companies A Good Investment? (Part 2)",
+    description: "Zooming in on Longevity M&A Trends",
+    author: "Longevity Global",
+    link: "https://longevitygl.substack.com/p/are-longevity-companies-a-good-investment-299"
+  },
+  {
+    title: "What We'll Be Exploring in 2025",
+    description: "Help Shape What We Explore this Year",
+    author: "Longevity Explorers",
+    link: "https://techenhancedlife.substack.com/p/what-well-be-exploring-in-2025"
+  },
+  {
+    title: "Coleen Murphy: The Science of Aging and Longevity",
+    description: "A leading scientist who has dedicated her career to understand how we age discusses the prospects of modulating the process",
+    author: "Eric Topol",
+    link: "https://erictopol.substack.com/p/coleen-murphy-the-science-of-aging"
+  },
+  {
+    title: "On Longevity",
+    description: "For someone who knows nothing, by someone who knows nothing",
+    author: "Andreessen Horowitz",
+    link: "https://eriktorenberg.substack.com/p/on-longevity"
+  },
+  {
+    title: "The Longevity Paradox",
+    description: "How an obsession with extending life keeps us from living.",
+    author: "Vanessa Scaringi, PhD",
+    link: "https://vanessascaringiphd.substack.com/p/the-longevity-paradox"
+  },
+  {
+    title: "Natural Habitats for Longevity Communities",
+    description: "On and offline opportunities to meet your people",
+    author: "LongX - Longevity Xplorer",
+    link: "https://longevityxplorer.substack.com/p/natural-habitats-for-longevity-communities"
+  },
+  {
+    title: "Unleash Your Inner Strength - The Benefits of Barbell Training",
+    description: "While there are countless tools, the barbell remains one of the most effective and efficient means for building functional strength and slowing age-related physical decline.",
+    author: "Pete McCall",
+    link: "https://strengthforlongevity.substack.com/p/unleash-your-inner-strength-the-benefits"
+  },
+  {
+    title: "The End of GPs? • Tech for Hot Flashes • NDA+ patches • Why VC-Backed Longevity Startups Are Dying?",
+    description: "Issue 55: The front page of longevity medicine - curated by doctors, for doctors.",
+    author: "David Luu",
+    link: "https://newsletter.longevitydocs.org/p/the-end-of-gps-tech-for-hot-flashes"
+  }
+];
+
+function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
   return (
-    <main className="min-h-screen pt-24">
-      {/* Hero Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-green-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">
-            LongBio Institute Letter
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Stay updated with the latest developments in longevity biotech through our weekly newsletter
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all h-full flex flex-col">
+        <div className="flex-grow">
+          <p className="text-blue-300 text-sm mb-2">{post.author}</p>
+          <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+            {post.title}
+          </h3>
+          <p className="text-blue-200 text-sm mb-4 line-clamp-2">
+            {post.description}
           </p>
+        </div>
+
+        <div className="substack-post-embed mt-auto">
           <a
-            href="https://longbio.substack.com"
+            href={post.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors group"
           >
             Read on Substack
-            <svg
-              className="ml-2 h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
+            <svg 
+              className="ml-2 w-4 h-4 transform transition-transform group-hover:translate-x-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
               />
             </svg>
           </a>
         </div>
-      </section>
+      </div>
+    </motion.div>
+  );
+}
 
-      {/* Featured Posts Preview */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Featured Posts
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="bg-white rounded-xl shadow-sm p-8 hover:shadow-md transition-shadow"
-              >
-                <div className="h-48 bg-gray-100 rounded-lg mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Coming Soon
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Our latest insights and analysis will be available here soon.
-                </p>
-              </div>
-            ))}
-          </div>
+export default function BlogPage() {
+  return (
+    <PageLayout
+      title="LongBio Blog"
+      subtitle="Curated insights from leading voices in longevity research"
+    >
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-16"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogPosts.map((post, index) => (
+            <BlogPostCard key={index} post={post} index={index} />
+          ))}
         </div>
-      </section>
+      </motion.section>
 
-      {/* Newsletter Signup */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Subscribe to Our Newsletter
-          </h2>
-          <p className="text-gray-600 mb-8">
-            Get weekly updates on longevity research, biotech developments, and industry news.
-          </p>
-          <a
-            href="https://longbio.substack.com/subscribe"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Subscribe on Substack
-            <svg
-              className="ml-2 h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-          </a>
-        </div>
-      </section>
-    </main>
-  )
-} 
+      {/* Substack Script */}
+      <Script 
+        src="https://substack.com/embedjs/embed.js" 
+        strategy="lazyOnload"
+      />
+    </PageLayout>
+  );
+}

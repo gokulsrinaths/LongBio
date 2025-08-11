@@ -9,12 +9,12 @@ export default function AnimationWrapper({ children }: { children: ReactNode }) 
   return (
     <AnimationProvider>
       <AnimatePresence mode="wait">
-        <motion.main
+        <motion.div
           {...pageTransition}
           className="min-h-screen"
         >
           {children}
-        </motion.main>
+        </motion.div>
       </AnimatePresence>
     </AnimationProvider>
   );

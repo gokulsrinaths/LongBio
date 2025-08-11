@@ -37,13 +37,18 @@ const cardVariants = cva(
   }
 );
 
-export interface CardProps
-  extends Omit<HTMLMotionProps<"div">, keyof VariantProps<typeof cardVariants>>,
-    VariantProps<typeof cardVariants> {
+type BaseCardProps = VariantProps<typeof cardVariants> & {
   isInteractive?: boolean;
-}
+  children?: React.ReactNode;
+  className?: string;
+  href?: string;
+};
 
-const Card = React.forwardRef<HTMLDivElement, CardProps & { ref?: React.Ref<HTMLDivElement> }>(
+export interface CardProps extends 
+  BaseCardProps,
+  Omit<React.HTMLAttributes<HTMLDivElement>, keyof BaseCardProps> {}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
   (
     {
       className,
@@ -51,27 +56,36 @@ const Card = React.forwardRef<HTMLDivElement, CardProps & { ref?: React.Ref<HTML
       padding,
       hover,
       isInteractive = false,
+      href,
       children,
       ...props
     },
     ref
   ) => {
-    const Component = (isInteractive ? motion.div : 'div') as typeof motion.div;
+    if (isInteractive || href) {
+      const Component = href ? motion.a : motion.div;
+      return (
+        <Component
+          {...(href ? { href } : {})}
+          ref={ref}
+          className={cardVariants({ variant, padding, hover, className })}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          {...props as any}
+        >
+          {children}
+        </Component>
+      );
+    }
 
     return (
-      <Component
+      <div
         ref={ref}
         className={cardVariants({ variant, padding, hover, className })}
-        whileHover={isInteractive ? "hover" : undefined}
-        whileTap={isInteractive ? "tap" : undefined}
-        variants={{
-          hover: { scale: 1.02 },
-          tap: { scale: 0.98 }
-        }}
         {...props}
       >
         {children}
-      </Component>
+      </div>
     );
   }
 );

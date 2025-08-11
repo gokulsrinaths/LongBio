@@ -1,73 +1,117 @@
-import { HTMLAttributes, forwardRef } from 'react';
+'use client';
+
+import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
 
 const typographyVariants = cva('', {
   variants: {
     variant: {
-      h1: 'text-4xl font-bold sm:text-5xl md:text-6xl',
-      h2: 'text-3xl font-bold sm:text-4xl md:text-5xl',
-      h3: 'text-2xl font-bold sm:text-3xl',
-      h4: 'text-xl font-bold sm:text-2xl',
-      h5: 'text-lg font-bold',
-      h6: 'text-base font-bold',
-      subtitle1: 'text-xl',
-      subtitle2: 'text-lg',
-      body1: 'text-base',
-      body2: 'text-sm',
-      caption: 'text-xs',
-      overline: 'text-xs uppercase tracking-wider'
+      h1: 'font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight',
+      h2: 'font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight',
+      h3: 'font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight',
+      h4: 'font-serif text-xl sm:text-2xl lg:text-3xl font-bold leading-tight',
+      h5: 'font-serif text-lg sm:text-xl lg:text-2xl font-bold leading-tight',
+      h6: 'font-serif text-base sm:text-lg lg:text-xl font-bold leading-tight',
+      subtitle1: 'text-xl font-medium leading-relaxed',
+      subtitle2: 'text-lg font-medium leading-relaxed',
+      body1: 'text-base leading-relaxed',
+      body2: 'text-sm leading-relaxed',
+      caption: 'text-sm leading-normal',
+      overline: 'text-xs uppercase tracking-wider font-medium',
     },
-    textColor: {
-      primary: 'text-blue-900 dark:text-blue-100',
-      secondary: 'text-blue-700 dark:text-blue-300',
-      tertiary: 'text-blue-500 dark:text-blue-400',
+    color: {
+      primary: 'text-primary-navy-900',
+      secondary: 'text-primary-navy-600',
+      tertiary: 'text-primary-navy-400',
       white: 'text-white',
-      error: 'text-red-600 dark:text-red-400',
-      success: 'text-green-600 dark:text-green-400',
-      gold: 'text-yellow-600 dark:text-yellow-400'
+      gold: 'text-primary-gold-500',
+      success: 'text-primary-green-600',
+      error: 'text-red-600',
     },
     align: {
       left: 'text-left',
       center: 'text-center',
-      right: 'text-right'
+      right: 'text-right',
     },
     weight: {
       light: 'font-light',
       normal: 'font-normal',
       medium: 'font-medium',
       semibold: 'font-semibold',
-      bold: 'font-bold'
-    }
+      bold: 'font-bold',
+    },
   },
   defaultVariants: {
     variant: 'body1',
-    textColor: 'primary',
+    color: 'primary',
     align: 'left',
-    weight: 'normal'
-  }
+    weight: 'normal',
+  },
 });
 
-type TypographyElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
-
-interface BaseTypographyProps extends HTMLAttributes<HTMLElement> {
-  as?: TypographyElement;
+export interface TypographyProps
+  extends React.HTMLAttributes<HTMLElement>,
+    VariantProps<typeof typographyVariants> {
+  component?: keyof JSX.IntrinsicElements;
 }
 
-interface TypographyProps extends BaseTypographyProps, VariantProps<typeof typographyVariants> {
-  textColor?: VariantProps<typeof typographyVariants>['textColor'];
-}
+const Typography = React.forwardRef<HTMLElement, TypographyProps>(
+  (
+    {
+      className,
+      variant,
+      color,
+      align,
+      weight,
+      component,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const Component = component || getDefaultComponent(variant);
 
-export const Typography = forwardRef<HTMLElement, TypographyProps>(
-  ({ as: Component = 'p', variant, textColor, align, weight, className, ...props }, ref) => {
-    return (
-      <Component
-        ref={ref}
-        className={cn(typographyVariants({ variant, textColor, align, weight }), className)}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className: typographyVariants({ variant, color, align, weight, className }),
+        ...props,
+      },
+      children
     );
   }
 );
 
+function getDefaultComponent(variant: string | null | undefined): keyof JSX.IntrinsicElements {
+  switch (variant) {
+    case 'h1':
+      return 'h1';
+    case 'h2':
+      return 'h2';
+    case 'h3':
+      return 'h3';
+    case 'h4':
+      return 'h4';
+    case 'h5':
+      return 'h5';
+    case 'h6':
+      return 'h6';
+    case 'subtitle1':
+    case 'subtitle2':
+      return 'h6';
+    case 'body1':
+    case 'body2':
+      return 'p';
+    case 'caption':
+      return 'span';
+    case 'overline':
+      return 'span';
+    default:
+      return 'p';
+  }
+}
+
 Typography.displayName = 'Typography';
+
+export { Typography, typographyVariants };

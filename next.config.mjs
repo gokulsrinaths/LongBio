@@ -11,24 +11,8 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
-  // Build monitoring
-  onBuildStart: async () => {
-    if (process.env.NODE_ENV === 'production') {
-      const { buildMonitor } = await import('./scripts/build-monitor.js');
-      buildMonitor.start();
-    }
-  },
-  
-  onBuildComplete: async (buildResult) => {
-    if (process.env.NODE_ENV === 'production') {
-      const { buildMonitor } = await import('./scripts/build-monitor.js');
-      buildMonitor.end(
-        buildResult.errors.length === 0,
-        buildResult.errors,
-        buildResult.warnings
-      );
-    }
-  },
+  // Build output configuration
+  output: 'standalone',
 
   // Security headers
   async headers() {

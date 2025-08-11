@@ -42,6 +42,7 @@ export interface ButtonProps
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  href?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps & { ref?: React.Ref<HTMLButtonElement> }>(
@@ -54,13 +55,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps & { ref?: React.R
       isLoading = false,
       leftIcon,
       rightIcon,
+      href,
       children,
       ...props
     },
     ref
   ) => {
+    const Component = href ? motion.a : motion.button;
     return (
-      <motion.button
+      <Component
+        {...(href ? { href } : {})}
         className={buttonVariants({ variant, size, fullWidth, className })}
         ref={ref}
         whileHover="hover"
@@ -99,7 +103,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps & { ref?: React.R
             {rightIcon && <span className="ml-2">{rightIcon}</span>}
           </>
         )}
-      </motion.button>
+      </Component>
     );
   }
 );

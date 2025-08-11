@@ -1,134 +1,55 @@
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import React, { FC, ReactNode, useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useMousePosition } from '@/hooks/useMousePosition';
 
-// Futuristic 3D card effect
-export const ParallaxCard: FC<{ children: ReactNode }> = ({ children }) => {
+export function MouseTracker() {
   const ref = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { x, y } = useMousePosition(ref);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+  const springConfig = { damping: 25, stiffness: 700 };
+  const mouseX = useSpring(x, springConfig);
+  const mouseY = useSpring(y, springConfig);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = element.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      setMousePosition({ x, y });
-    };
-
-    element.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      element.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  const rotateX = useTransform(
-    useMotionValue(mousePosition.y),
-    [0, 1],
-    [-10, 10]
-  );
-
-  const rotateY = useTransform(
-    useMotionValue(mousePosition.x),
-    [0, 1],
-    [-10, 10]
-  );
+  const centerX = useTransform(mouseX, (latest) => latest - (ref.current?.offsetWidth ?? 0) / 2);
+  const centerY = useTransform(mouseY, (latest) => latest - (ref.current?.offsetHeight ?? 0) / 2);
 
   return (
     <motion.div
       ref={ref}
+      className="relative w-full h-full"
       style={{
-        rotateX,
-        rotateY,
-        transformStyle: 'preserve-3d',
-        perspective: '1000px'
+        perspective: 600
       }}
-      whileHover={{ scale: 1.02 }}
-      className="relative"
     >
-      {children}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          rotateX: useTransform(centerY, [-100, 100], [30, -30]),
+          rotateY: useTransform(centerX, [-100, 100], [-30, 30])
+        }}
+      />
     </motion.div>
   );
-};
+}
 
-// Smooth scroll progress indicator
-export const ScrollProgress: FC = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
+export function FloatingElement() {
   return (
     <motion.div
-      style={{ scaleX }}
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500 origin-left z-50"
-    />
-  );
-};
-
-// Animated section reveal
-export const SectionReveal: FC<{ children: ReactNode }> = ({ children }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
-
-  return (
-    <motion.div
-      ref={ref}
-      style={{ opacity, y }}
       className="relative"
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-// Magnetic button effect
-export const MagneticButton: FC<{ children: ReactNode }> = ({ children }) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const distance = 20;
-
-    x.set((e.clientX - centerX) / distance);
-    y.set((e.clientY - centerY) / distance);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.button
-      ref={ref}
-      style={{ x, y }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
+      animate={{
+        y: [0, -20, 0],
+        rotate: [0, 5, -5, 0]
+      }}
       transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 10
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut"
       }}
-      className="relative"
     >
-      {children}
-    </motion.button>
+      <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/30 to-purple-500/30 blur-xl" />
+      <div className="relative bg-blue-900/50 backdrop-blur-sm rounded-2xl p-6">
+        <slot />
+      </div>
+    </motion.div>
   );
-};
+}

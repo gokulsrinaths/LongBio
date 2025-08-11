@@ -1,36 +1,36 @@
+import { HTMLAttributes, forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import React from 'react';
+import { cn } from '@/utils/cn';
 
 const typographyVariants = cva('', {
   variants: {
     variant: {
-      h1: 'text-4xl font-bold',
-      h2: 'text-3xl font-bold',
-      h3: 'text-2xl font-bold',
-      h4: 'text-xl font-bold',
+      h1: 'text-4xl font-bold sm:text-5xl md:text-6xl',
+      h2: 'text-3xl font-bold sm:text-4xl md:text-5xl',
+      h3: 'text-2xl font-bold sm:text-3xl',
+      h4: 'text-xl font-bold sm:text-2xl',
       h5: 'text-lg font-bold',
       h6: 'text-base font-bold',
-      subtitle1: 'text-lg font-medium',
-      subtitle2: 'text-base font-medium',
+      subtitle1: 'text-xl',
+      subtitle2: 'text-lg',
       body1: 'text-base',
       body2: 'text-sm',
-      caption: 'text-sm text-gray-500',
+      caption: 'text-xs',
       overline: 'text-xs uppercase tracking-wider'
     },
     textColor: {
-      primary: 'text-gray-900',
-      secondary: 'text-gray-600',
-      gold: 'text-amber-500',
+      primary: 'text-blue-900 dark:text-blue-100',
+      secondary: 'text-blue-700 dark:text-blue-300',
+      tertiary: 'text-blue-500 dark:text-blue-400',
       white: 'text-white',
-      error: 'text-red-500',
-      success: 'text-green-500',
-      tertiary: 'text-gray-400'
+      error: 'text-red-600 dark:text-red-400',
+      success: 'text-green-600 dark:text-green-400',
+      gold: 'text-yellow-600 dark:text-yellow-400'
     },
     align: {
       left: 'text-left',
       center: 'text-center',
-      right: 'text-right',
-      justify: 'text-justify'
+      right: 'text-right'
     },
     weight: {
       light: 'font-light',
@@ -48,29 +48,26 @@ const typographyVariants = cva('', {
   }
 });
 
-type AllowedElements = Extract<keyof JSX.IntrinsicElements, 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span' | 'div'>;
+type TypographyElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
 
-export interface TypographyProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, 'color'>,
-    VariantProps<typeof typographyVariants> {
-  component?: AllowedElements;
+interface BaseTypographyProps extends HTMLAttributes<HTMLElement> {
+  as?: TypographyElement;
 }
 
-export const Typography: React.FC<TypographyProps> = ({
-  component = 'p',
-  variant,
-  textColor,
-  align,
-  weight,
-  className,
-  ...props
-}) => {
-  const Component = component as keyof JSX.IntrinsicElements;
-  return React.createElement(
-    Component,
-    {
-      className: typographyVariants({ variant, textColor, align, weight, className }),
-      ...props
-    }
-  );
-};
+interface TypographyProps extends BaseTypographyProps, VariantProps<typeof typographyVariants> {
+  textColor?: VariantProps<typeof typographyVariants>['textColor'];
+}
+
+export const Typography = forwardRef<HTMLElement, TypographyProps>(
+  ({ as: Component = 'p', variant, textColor, align, weight, className, ...props }, ref) => {
+    return (
+      <Component
+        ref={ref}
+        className={cn(typographyVariants({ variant, textColor, align, weight }), className)}
+        {...props}
+      />
+    );
+  }
+);
+
+Typography.displayName = 'Typography';

@@ -1,86 +1,54 @@
-import React, { useState } from 'react';
-import NetworkGraph from '../NetworkGraph';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
+import { useState } from 'react';
+import { NetworkGraph } from '@/components/NetworkGraph';
 
-interface Paper {
-  id: string;
-  title: string;
-  authors: string[];
-  topics: string[];
-  citations: string[];
-}
+type NodeType = 'paper' | 'author' | 'topic';
 
 interface Node {
   id: string;
-  type: 'company' | 'researcher' | 'technology';
+  type: NodeType;
   name: string;
 }
 
 interface Edge {
   source: string;
   target: string;
-  type: 'cites' | 'authored' | 'researches';
+  type: string;
 }
 
-const CitationNetwork: React.FC = () => {
-  const [selectedPaper, setSelectedPaper] = useState<Paper | null>(null);
+interface CitationNetworkProps {
+  initialNodes?: Node[];
+  initialEdges?: Edge[];
+}
 
-  // Mock data - replace with real data
-  const papers: Paper[] = [
-    {
-      id: '1',
-      title: 'Longevity Research Overview',
-      authors: ['John Doe', 'Jane Smith'],
-      topics: ['aging', 'biotech'],
-      citations: ['2', '3']
-    },
-    // Add more papers...
-  ];
+export function CitationNetwork({ initialNodes = [], initialEdges = [] }: CitationNetworkProps) {
+  const [nodes, setNodes] = useState<Node[]>(initialNodes);
+  const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
-  // Convert papers to graph data
-  const nodes: Node[] = papers.map(paper => ({
-    id: paper.id,
-    type: 'researcher', // Changed from 'paper' to match Node type
-    name: paper.title
+  // Convert library nodes to network nodes
+  const networkNodes = nodes.map(node => ({
+    id: node.id,
+    type: node.type === 'paper' ? 'company' :
+          node.type === 'author' ? 'researcher' :
+          'technology',
+    name: node.name
   }));
 
-  const edges: Edge[] = papers.flatMap(paper =>
-    paper.citations.map(citationId => ({
-      source: paper.id,
-      target: citationId,
-      type: 'cites'
-    }))
-  );
+  // Convert library edges to network edges
+  const networkEdges = edges.map(edge => ({
+    source: edge.source,
+    target: edge.target,
+    type: edge.type
+  }));
 
   return (
-    <Card className="p-4">
-      <h2 className="text-xl font-bold mb-4">Citation Network</h2>
-      <div className="h-[400px] relative">
-        <NetworkGraph
-          nodes={nodes}
-          edges={edges}
-          onNodeClick={(node) => {
-            const paper = papers.find(p => p.id === node.id);
-            if (paper) setSelectedPaper(paper);
-          }}
-        />
-      </div>
-      {selectedPaper && (
-        <div className="mt-4 p-4 bg-gray-100 rounded">
-          <h3 className="font-bold">{selectedPaper.title}</h3>
-          <p>Authors: {selectedPaper.authors.join(', ')}</p>
-          <p>Topics: {selectedPaper.topics.join(', ')}</p>
-          <Button
-            onClick={() => setSelectedPaper(null)}
-            className="mt-2"
-          >
-            Close
-          </Button>
-        </div>
-      )}
-    </Card>
+    <div className="w-full h-[600px] bg-blue-950/30 backdrop-blur-sm rounded-2xl overflow-hidden">
+      <NetworkGraph
+        nodes={networkNodes}
+        edges={networkEdges}
+        onNodeClick={(node) => {
+          console.log('Node clicked:', node);
+        }}
+      />
+    </div>
   );
-};
-
-export default CitationNetwork;
+}

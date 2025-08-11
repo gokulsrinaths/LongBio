@@ -2,19 +2,327 @@
 
 import PageLayout from '@/components/PageLayout';
 import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { motion } from 'framer-motion';
 
 export default function ResearchPage() {
   return (
     <PageLayout
-      title="Research"
-      subtitle="Our latest research and publications in longevity science."
+      title="Research & Innovation"
+      subtitle="Exploring groundbreaking approaches to extend human healthspan through scientific discovery."
+      showStats={true}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card>
-          <h3>Research Content</h3>
-          <p>Coming soon...</p>
+      {/* Research Areas */}
+      <section className="mb-20">
+        <h2 className="text-2xl font-semibold text-white mb-8">
+          Research Focus Areas
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {researchAreas.map((area, index) => (
+            <Card 
+              key={area.title}
+              href={area.href}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + index * 0.1 }}
+              >
+                <div className="h-12 w-12 rounded-lg bg-blue-600/20 flex items-center justify-center mb-6">
+                  <area.icon className="h-6 w-6 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-4">
+                  {area.title}
+                </h3>
+                <p className="text-blue-100 mb-6">
+                  {area.description}
+                </p>
+                <div className="flex items-center text-sm text-blue-200">
+                  <span>{area.publications} publications</span>
+                  <span className="mx-2 opacity-50">•</span>
+                  <span>{area.researchers} researchers</span>
+                </div>
+              </motion.div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Latest Publications */}
+      <section className="mb-20">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-semibold text-white">
+            Latest Publications
+          </h2>
+          <Button variant="outline" size="sm" href="/research/publications">
+            View All Publications
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 gap-6">
+          {latestPublications.map((pub, index) => (
+            <Card 
+              key={pub.title}
+              href={pub.href}
+            >
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex items-center gap-6"
+              >
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="px-2 py-1 rounded bg-blue-600/20 text-blue-200 text-sm">
+                      {pub.journal}
+                    </span>
+                    <span className="text-blue-200 text-sm">
+                      {pub.date}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {pub.title}
+                  </h3>
+                  <p className="text-blue-100 text-sm mb-3">
+                    {pub.authors}
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-blue-200">
+                    <span className="flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                      {pub.citations} citations
+                    </span>
+                    <span className="flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      {pub.downloads}+ downloads
+                    </span>
+                  </div>
+                </div>
+                <Button variant="secondary" size="sm">
+                  Read Paper
+                </Button>
+              </motion.div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Research Labs */}
+      <section className="mb-20">
+        <h2 className="text-2xl font-semibold text-white mb-8">
+          Our Research Labs
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {researchLabs.map((lab, index) => (
+            <Card 
+              key={lab.name}
+              href={lab.href}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 + index * 0.1 }}
+                className="flex gap-6"
+              >
+                <div className="relative w-32 h-32 flex-shrink-0">
+                  <div className="absolute inset-0 bg-blue-400/20 blur-xl rounded-full" />
+                  <img
+                    src={lab.image}
+                    alt={lab.name}
+                    className="relative rounded-lg w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {lab.name}
+                  </h3>
+                  <p className="text-blue-100 text-sm mb-4">
+                    {lab.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {lab.focus.map((tag) => (
+                      <span 
+                        key={tag}
+                        className="px-2 py-1 rounded bg-blue-600/20 text-blue-200 text-sm"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Collaboration */}
+      <section>
+        <Card className="p-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Research Collaboration
+              </h2>
+              <p className="text-blue-100 mb-8">
+                We're always looking to collaborate with researchers and institutions 
+                pushing the boundaries of longevity science. Join our network of 
+                innovation partners.
+              </p>
+              <div className="flex justify-center gap-4">
+                <Button variant="primary" size="lg" href="/research/collaborate">
+                  Partner With Us
+                </Button>
+                <Button variant="outline" size="lg" href="/research/network">
+                  View Network
+                </Button>
+              </div>
+            </motion.div>
+          </div>
         </Card>
-      </div>
+      </section>
     </PageLayout>
   );
 }
+
+const researchAreas = [
+  {
+    title: 'Cellular Reprogramming',
+    description: 'Investigating methods to reset cellular age and restore youthful function.',
+    publications: 45,
+    researchers: 12,
+    href: '/research/cellular-reprogramming',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Epigenetic Modification',
+    description: 'Studying changes in gene expression that occur with aging.',
+    publications: 38,
+    researchers: 10,
+    href: '/research/epigenetics',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Senescent Cell Biology',
+    description: 'Exploring the role of senescent cells in aging and disease.',
+    publications: 42,
+    researchers: 15,
+    href: '/research/senescence',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+      </svg>
+    ),
+  },
+  {
+    title: 'AI in Drug Discovery',
+    description: 'Using artificial intelligence to accelerate therapeutic development.',
+    publications: 35,
+    researchers: 8,
+    href: '/research/ai-drug-discovery',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Biomarker Development',
+    description: 'Developing new ways to measure biological age and intervention efficacy.',
+    publications: 32,
+    researchers: 9,
+    href: '/research/biomarkers',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+  },
+  {
+    title: 'Clinical Translation',
+    description: 'Bridging laboratory discoveries with clinical applications.',
+    publications: 28,
+    researchers: 11,
+    href: '/research/clinical-translation',
+    icon: (props: any) => (
+      <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+  },
+];
+
+const latestPublications = [
+  {
+    title: 'Novel Approaches to Cellular Reprogramming in Age-Related Diseases',
+    authors: 'Dr. Sarah Chen, Dr. Michael Patel, et al.',
+    journal: 'Nature Longevity',
+    date: 'Mar 15, 2024',
+    citations: 45,
+    downloads: '2.5K',
+    href: '/research/publications/cellular-reprogramming',
+  },
+  {
+    title: 'AI-Driven Discovery of Longevity-Associated Genetic Pathways',
+    authors: 'Dr. James Lee, Dr. Emma Wilson, et al.',
+    journal: 'Cell Research',
+    date: 'Mar 12, 2024',
+    citations: 32,
+    downloads: '1.8K',
+    href: '/research/publications/ai-pathways',
+  },
+  {
+    title: 'Clinical Outcomes of Senolytic Therapies: A Meta-Analysis',
+    authors: 'Dr. Robert Johnson, Dr. Lisa Zhang, et al.',
+    journal: 'Aging Cell',
+    date: 'Mar 10, 2024',
+    citations: 28,
+    downloads: '2.1K',
+    href: '/research/publications/senolytic-therapies',
+  },
+];
+
+const researchLabs = [
+  {
+    name: 'Cellular Reprogramming Lab',
+    description: 'Focused on developing novel approaches to reset cellular age while maintaining cell identity and function.',
+    image: '/labs/cellular.jpg',
+    focus: ['Epigenetics', 'Cell Biology', 'Gene Expression'],
+    href: '/research/labs/cellular',
+  },
+  {
+    name: 'AI & Computational Biology Lab',
+    description: 'Leveraging artificial intelligence and machine learning to accelerate drug discovery and biomarker development.',
+    image: '/labs/computational.jpg',
+    focus: ['AI/ML', 'Drug Discovery', 'Bioinformatics'],
+    href: '/research/labs/computational',
+  },
+  {
+    name: 'Translational Research Lab',
+    description: 'Bridging the gap between laboratory discoveries and clinical applications in age-related diseases.',
+    image: '/labs/translational.jpg',
+    focus: ['Clinical Trials', 'Biomarkers', 'Therapeutics'],
+    href: '/research/labs/translational',
+  },
+  {
+    name: 'Aging Mechanisms Lab',
+    description: 'Investigating the fundamental biological processes that drive aging and age-related diseases.',
+    image: '/labs/aging.jpg',
+    focus: ['Molecular Biology', 'Genetics', 'Biochemistry'],
+    href: '/research/labs/aging',
+  },
+]; 

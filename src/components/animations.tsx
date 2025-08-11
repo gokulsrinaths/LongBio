@@ -1,7 +1,5 @@
-'use client';
-
-import { motion, Variants, Transition } from 'framer-motion';
-import { FC } from 'react';
+import { motion, Variants, Transition, Easing } from 'framer-motion';
+import { FC, ReactNode } from 'react';
 
 // Enhanced easing curves for more natural motion
 export const easings = {
@@ -102,7 +100,7 @@ export const cardInteraction: Variants = {
 };
 
 // Smooth scroll reveal with parallax
-export const ParallaxScrollReveal: FC<{ children: React.ReactNode; offset?: number }> = ({ 
+export const ParallaxScrollReveal: FC<{ children: ReactNode; offset?: number }> = ({ 
   children, 
   offset = 50 
 }) => {
@@ -126,7 +124,7 @@ export const ParallaxScrollReveal: FC<{ children: React.ReactNode; offset?: numb
 
 // Enhanced button interaction
 export const ButtonInteraction: FC<{ 
-  children: React.ReactNode;
+  children: ReactNode;
   isLoading?: boolean;
 }> = ({ children, isLoading }) => {
   return (
@@ -160,8 +158,36 @@ export const ButtonInteraction: FC<{
   );
 };
 
+// Logo animation
+export const LogoAnimation: FC<{ children: ReactNode }> = ({ children }) => {
+  return (
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0, rotate: -10 }}
+      animate={{ 
+        scale: 1, 
+        opacity: 1, 
+        rotate: 0,
+        transition: {
+          duration: 0.8,
+          ease: easings.spring
+        } as Transition
+      }}
+      whileHover={{
+        scale: 1.05,
+        rotate: 5,
+        transition: {
+          duration: 0.3,
+          ease: easings.spring
+        } as Transition
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 // Sponsor card animation
-export const SponsorCardAnimation: FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SponsorCardAnimation: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -189,6 +215,7 @@ export const SponsorCardAnimation: FC<{ children: React.ReactNode }> = ({ childr
   );
 };
 
+// Resource card interaction
 // Page transition animation
 export const pageTransition: Variants = {
   initial: {

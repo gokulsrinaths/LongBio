@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { easings } from './animations';
+import Image from 'next/image';
 
 interface VideoCardProps {
   title: string;
@@ -34,11 +35,13 @@ const VideoCard: React.FC<VideoCardProps> = ({
       }}
     >
       <a href={videoUrl} target="_blank" rel="noopener noreferrer">
-        <div className="aspect-w-16 aspect-h-9">
-          <img
+        <div className="aspect-w-16 aspect-h-9 relative">
+          <Image
             src={thumbnailUrl}
             alt={title}
-            className="object-cover w-full h-full"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
         </div>

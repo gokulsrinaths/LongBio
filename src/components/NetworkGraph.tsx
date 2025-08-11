@@ -19,7 +19,7 @@ export interface NetworkGraphProps {
   onNodeClick?: (node: Node) => void;
 }
 
-const NetworkGraph: React.FC<NetworkGraphProps> = ({ nodes, edges, onNodeClick }) => {
+const NetworkGraph: React.FC<NetworkGraphProps> = ({ nodes, edges }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { databaseConfig } from '@/config/database';
@@ -12,7 +14,7 @@ const DatabaseButton: React.FC<{
   label: string;
   isActive: boolean;
   onClick: () => void;
-}> = ({ view, label, isActive, onClick }) => (
+}> = ({ label, isActive, onClick }) => (
   <motion.button
     onClick={onClick}
     className={`px-6 py-3 rounded-lg text-sm font-medium transition-colors ${

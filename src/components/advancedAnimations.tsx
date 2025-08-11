@@ -1,6 +1,5 @@
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import React, { FC, ReactNode, useRef, useEffect, useState } from 'react';
-import { easings } from './animations';
 
 // Futuristic 3D card effect
 export const ParallaxCard: FC<{ children: ReactNode }> = ({ children }) => {
@@ -8,16 +7,20 @@ export const ParallaxCard: FC<{ children: ReactNode }> = ({ children }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
+      const rect = element.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
       setMousePosition({ x, y });
     };
 
-    ref.current?.addEventListener('mousemove', handleMouseMove);
-    return () => ref.current?.removeEventListener('mousemove', handleMouseMove);
+    element.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      element.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const rotateX = useTransform(

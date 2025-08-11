@@ -1,94 +1,86 @@
-'use client';
+import React, { useState } from 'react';
+import NetworkGraph from '../NetworkGraph';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
 
-import { useState } from 'react';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import NetworkGraph from '@/components/NetworkGraph';
-
-interface CitationNode {
+interface Paper {
   id: string;
   title: string;
-  type: 'paper' | 'author' | 'topic';
+  authors: string[];
+  topics: string[];
+  citations: string[];
 }
 
-interface CitationEdge {
+interface Node {
+  id: string;
+  type: 'company' | 'researcher' | 'technology';
+  name: string;
+}
+
+interface Edge {
   source: string;
   target: string;
-  type: 'cites' | 'authored' | 'related';
+  type: 'cites' | 'authored' | 'researches';
 }
 
-interface CitationNetworkProps {
-  nodes: CitationNode[];
-  edges: CitationEdge[];
-  onNodeClick?: (node: CitationNode) => void;
-  onEdgeClick?: (edge: CitationEdge) => void;
-}
+const CitationNetwork: React.FC = () => {
+  const [selectedPaper, setSelectedPaper] = useState<Paper | null>(null);
 
-export default function CitationNetwork({
-  nodes,
-  edges,
-  onNodeClick,
-  onEdgeClick,
-}: CitationNetworkProps) {
-  const [zoom, setZoom] = useState(1);
+  // Mock data - replace with real data
+  const papers: Paper[] = [
+    {
+      id: '1',
+      title: 'Longevity Research Overview',
+      authors: ['John Doe', 'Jane Smith'],
+      topics: ['aging', 'biotech'],
+      citations: ['2', '3']
+    },
+    // Add more papers...
+  ];
 
-  const handleZoomIn = () => {
-    setZoom(prev => Math.min(prev + 0.2, 2));
-  };
+  // Convert papers to graph data
+  const nodes: Node[] = papers.map(paper => ({
+    id: paper.id,
+    type: 'researcher', // Changed from 'paper' to match Node type
+    name: paper.title
+  }));
 
-  const handleZoomOut = () => {
-    setZoom(prev => Math.max(prev - 0.2, 0.5));
-  };
-
-  const handleReset = () => {
-    setZoom(1);
-  };
+  const edges: Edge[] = papers.flatMap(paper =>
+    paper.citations.map(citationId => ({
+      source: paper.id,
+      target: citationId,
+      type: 'cites'
+    }))
+  );
 
   return (
-    <Card className="p-6">
-      <h3 className="text-xl font-semibold text-white mb-4">Citation Network</h3>
+    <Card className="p-4">
+      <h2 className="text-xl font-bold mb-4">Citation Network</h2>
       <div className="h-[400px] relative">
         <NetworkGraph
-          nodes={nodes.map(node => ({
-            id: node.id,
-            type: node.type,
-            name: node.title,
-          }))}
-          edges={edges.map(edge => ({
-            source: edge.source,
-            target: edge.target,
-          }))}
+          nodes={nodes}
+          edges={edges}
+          onNodeClick={(node) => {
+            const paper = papers.find(p => p.id === node.id);
+            if (paper) setSelectedPaper(paper);
+          }}
         />
-        <div className="absolute bottom-4 right-4 space-x-2">
-          <Button variant="outline" size="sm" onClick={handleZoomIn}>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </Button>
-          <Button variant="outline" size="sm" onClick={handleZoomOut}>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12H6" />
-            </svg>
-          </Button>
-          <Button variant="outline" size="sm" onClick={handleReset}>Reset</Button>
-        </div>
       </div>
-
-      {/* Legend */}
-      <div className="mt-4 flex flex-wrap gap-4">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-blue-500" />
-          <span className="text-sm text-blue-200">Papers</span>
+      {selectedPaper && (
+        <div className="mt-4 p-4 bg-gray-100 rounded">
+          <h3 className="font-bold">{selectedPaper.title}</h3>
+          <p>Authors: {selectedPaper.authors.join(', ')}</p>
+          <p>Topics: {selectedPaper.topics.join(', ')}</p>
+          <Button
+            onClick={() => setSelectedPaper(null)}
+            className="mt-2"
+          >
+            Close
+          </Button>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-green-500" />
-          <span className="text-sm text-blue-200">Authors</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-purple-500" />
-          <span className="text-sm text-blue-200">Topics</span>
-        </div>
-      </div>
+      )}
     </Card>
   );
-} 
+};
+
+export default CitationNetwork;

@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { databaseConfig } from '@/config/database';
+import { databaseConfig, DatabaseView } from '@/config/database';
 
 interface DatabaseNavProps {
-  activeView: string;
-  onViewChange: (view: string) => void;
+  activeView: DatabaseView;
+  onViewChange: (view: DatabaseView) => void;
 }
 
 const DatabaseButton: React.FC<{
-  view: string;
+  view: DatabaseView;
   label: string;
   isActive: boolean;
   onClick: () => void;
@@ -35,7 +35,7 @@ export const DatabaseNav: React.FC<DatabaseNavProps> = ({
 }) => {
   return (
     <div className="flex flex-wrap gap-4">
-      {Object.entries(databaseConfig).map(([view, { label }]) => (
+      {(Object.entries(databaseConfig) as [DatabaseView, typeof databaseConfig[DatabaseView]][]).map(([view, { label }]) => (
         <DatabaseButton
           key={view}
           view={view}

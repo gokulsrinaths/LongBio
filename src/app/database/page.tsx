@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 import { AirtableEmbed } from '@/components/database/AirtableEmbed';
 import { DatabaseNav } from '@/components/database/DatabaseNav';
-import { databaseConfig } from '@/config/database';
+import { databaseConfig, DatabaseView } from '@/config/database';
 
 export default function DatabasePage() {
-  const [activeView, setActiveView] = useState('companies');
+  const [activeView, setActiveView] = useState<DatabaseView>('companies');
 
   return (
     <PageLayout

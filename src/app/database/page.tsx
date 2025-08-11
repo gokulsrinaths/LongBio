@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
-import AirtableEmbed from '@/components/database/AirtableEmbed';
-import DatabaseNav from '@/components/database/DatabaseNav';
+import { AirtableEmbed } from '@/components/database/AirtableEmbed';
+import { DatabaseNav } from '@/components/database/DatabaseNav';
 import { databaseConfig } from '@/config/database';
 
 export default function DatabasePage() {

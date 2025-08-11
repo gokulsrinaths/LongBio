@@ -17,7 +17,7 @@ interface ChartProps {
   width?: number;
 }
 
-const Chart: React.FC<ChartProps> = ({ data, type, height = 400, width = 600 }) => {
+const Chart: React.FC<ChartProps> = ({ height = 400, width = 600 }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

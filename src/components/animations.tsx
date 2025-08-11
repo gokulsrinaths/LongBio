@@ -1,5 +1,7 @@
+'use client';
+
 import { motion, Variants, Transition } from 'framer-motion';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 // Enhanced easing curves for more natural motion
 export const easings = {
@@ -97,6 +99,94 @@ export const cardInteraction: Variants = {
       ease: easings.accelerate
     } as Transition
   }
+};
+
+// Smooth scroll reveal with parallax
+export const ParallaxScrollReveal: FC<{ children: React.ReactNode; offset?: number }> = ({ 
+  children, 
+  offset = 50 
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: offset }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0,
+        transition: {
+          duration: 0.8,
+          ease: easings.smooth
+        } as Transition
+      }}
+      viewport={{ once: true, margin: "-100px" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Enhanced button interaction
+export const ButtonInteraction: FC<{ 
+  children: React.ReactNode;
+  isLoading?: boolean;
+}> = ({ children, isLoading }) => {
+  return (
+    <motion.div
+      whileHover={{ 
+        scale: 1.02,
+        y: -2,
+        transition: { 
+          duration: 0.2, 
+          ease: easings.spring 
+        } as Transition
+      }}
+      whileTap={{ 
+        scale: 0.98,
+        transition: { 
+          duration: 0.1, 
+          ease: easings.accelerate 
+        } as Transition
+      }}
+      animate={isLoading ? {
+        scale: [1, 0.98, 1],
+        transition: {
+          duration: 1.5,
+          repeat: Infinity,
+          ease: easings.smooth
+        } as Transition
+      } : {}}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Sponsor card animation
+export const SponsorCardAnimation: FC<{ children: React.ReactNode }> = ({ children }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ 
+        opacity: 1, 
+        scale: 1,
+        transition: {
+          duration: 0.5,
+          ease: easings.smooth
+        } as Transition
+      }}
+      whileHover={{ 
+        y: -5,
+        boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+        background: "rgba(255,255,255,0.15)",
+        transition: {
+          duration: 0.3,
+          ease: easings.spring
+        } as Transition
+      }}
+      viewport={{ once: true, margin: "-50px" }}
+    >
+      {children}
+    </motion.div>
+  );
 };
 
 // Page transition animation

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '../ui/Button';
 
 interface Highlight {
   id: string;
@@ -18,11 +16,7 @@ const InteractivePaperViewer: React.FC<InteractivePaperViewerProps> = ({
   pdfUrl,
   title
 }) => {
-  const [highlights, setHighlights] = useState<Highlight[]>([]);
-
-  const handleHighlight = (highlight: Highlight) => {
-    setHighlights([...highlights, highlight]);
-  };
+  const [highlights] = useState<Highlight[]>([]);
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">

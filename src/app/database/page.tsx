@@ -7,7 +7,11 @@ import { DatabaseNav } from '@/components/database/DatabaseNav';
 import { databaseConfig, DatabaseView } from '@/config/database';
 
 export default function DatabasePage() {
+  // Initialize with a type-safe default value
   const [activeView, setActiveView] = useState<DatabaseView>('companies');
+
+  // Type assertion to ensure TypeScript knows activeView is a valid key
+  const currentConfig = databaseConfig[activeView as keyof typeof databaseConfig];
 
   return (
     <PageLayout
@@ -16,7 +20,7 @@ export default function DatabasePage() {
     >
       <div className="space-y-8">
         <DatabaseNav activeView={activeView} onViewChange={setActiveView} />
-        <AirtableEmbed url={databaseConfig[activeView].url} />
+        <AirtableEmbed url={currentConfig.url} />
       </div>
     </PageLayout>
   );

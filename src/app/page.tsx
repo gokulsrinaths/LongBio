@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { easings } from '@/components/animations';
-import HeroBackground from '@/components/HeroBackground';
+import { HeroBackground } from '@/components/HeroBackground';
 
 export default function Home() {
   return (
@@ -17,7 +16,7 @@ export default function Home() {
           y: 0,
           transition: {
             duration: 0.8,
-            ease: easings.smooth
+            ease: [0.165, 0.84, 0.44, 1] // smooth easing
           }
         }}
       >

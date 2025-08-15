@@ -134,20 +134,7 @@ function ResourceGrid() {
 }
 
 export default function Home() {
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setIsLoading(false);
-  }, []);
   const shouldReduceMotion = useReducedMotion();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-blue-950 flex items-center justify-center">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
 
   return (
     <main className="bg-blue-950 text-white min-h-screen" role="main">

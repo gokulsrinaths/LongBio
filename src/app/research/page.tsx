@@ -1,8 +1,8 @@
 'use client';
 
 import PageLayout from '@/components/PageLayout';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 import { motion } from 'framer-motion';
 
 export default function ResearchPage() {

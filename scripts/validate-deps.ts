@@ -49,14 +49,15 @@ async function validateDependencies(): Promise<boolean> {
     ];
 
     // Check if plugins are installed in node_modules
-    const missingPlugins = await Promise.all(requiredPlugins.map(async (plugin) => {
+    const pluginResults = await Promise.all(requiredPlugins.map(async (plugin) => {
       try {
         await import(plugin);
         return false;
       } catch (error) {
-        return true;
+        return plugin;
       }
-    })).filter(Boolean);
+    }));
+    const missingPlugins = pluginResults.filter((result): result is string => result !== false);
 
     if (missingDeps.length > 0) {
       console.error('❌ Missing dependencies:', missingDeps.join(', '));

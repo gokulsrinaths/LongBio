@@ -14,7 +14,7 @@ interface NotificationSystemProps {
   onDismiss: (id: string) => void;
 }
 
-export default function NotificationSystem({ notifications, onDismiss }: NotificationSystemProps) {
+export default function NotificationSystem({ notifications, onDismiss }: NotificationSystemProps): JSX.Element {
   return (
     <div className="fixed top-20 right-6 z-50 space-y-2">
       <AnimatePresence>

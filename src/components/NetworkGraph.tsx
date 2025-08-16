@@ -18,7 +18,7 @@ interface NetworkGraphProps {
   edges: Edge[];
 }
 
-export default function NetworkGraph({ nodes, edges }: NetworkGraphProps) {
+export default function NetworkGraph({ nodes, edges }: NetworkGraphProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { MagneticButton } from './advancedAnimations';
 
-export default function Hero() {
+export default function Hero(): JSX.Element {
   const { scrollYProgress } = useScroll();
   const _y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);

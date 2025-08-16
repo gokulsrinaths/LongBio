@@ -5,7 +5,7 @@ import { pageTransition } from './animations';
 import { AnimationProvider } from '@/context/AnimationContext';
 import { ReactNode } from 'react';
 
-export default function AnimationWrapper({ children }: { children: ReactNode }) {
+export default function AnimationWrapper({ children }: { children: ReactNode }): JSX.Element {
   return (
     <AnimationProvider>
       <AnimatePresence mode="wait">

@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const libraryDir = path.join(__dirname, '../src/components/library');
 const files: string[] = fs.readdirSync(libraryDir);
 
-files.forEach((file: string) => {
+files.forEach((file: string): void => {
   if (file.endsWith('.tsx')) {
     const filePath = path.join(libraryDir, file);
     let content = fs.readFileSync(filePath, 'utf8');

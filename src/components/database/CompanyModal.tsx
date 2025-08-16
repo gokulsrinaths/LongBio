@@ -11,7 +11,7 @@ interface CompanyModalProps {
   onClose: () => void;
 }
 
-export function CompanyModal({ company, onClose }: CompanyModalProps) {
+export function CompanyModal({ company, onClose }: CompanyModalProps): JSX.Element {
   return (
     <motion.div
       initial={{ opacity: 0 }}

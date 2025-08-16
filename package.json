@@ -1,5 +1,6 @@
 {
   "name": "long-bio",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "validate-deps": "ts-node scripts/validate-deps.ts",
+    "validate-deps": "ts-node-esm scripts/validate-deps.ts",
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",

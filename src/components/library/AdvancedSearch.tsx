@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
-interface Filter {
+interface _Filter {
   id: string;
   label: string;
 }
@@ -14,17 +14,17 @@ interface AdvancedSearchProps {
   onFilterChange: (filters: string[]) => void;
 }
 
-export default function AdvancedSearch({ onSearch, onFilterChange }: AdvancedSearchProps) {
+export default function AdvancedSearch({ onSearch, onFilterChange }: AdvancedSearchProps): JSX.Element {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleRemoveFilter = (filter: string) => {
+  const handleRemoveFilter = (filter: string): void => {
     const newFilters = activeFilters.filter(f => f !== filter);
     setActiveFilters(newFilters);
     onFilterChange(newFilters);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (): void => {
     onSearch(searchQuery);
   };
 

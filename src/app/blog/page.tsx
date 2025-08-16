@@ -74,7 +74,7 @@ const blogPosts: BlogPost[] = [
   }
 ];
 
-function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
+function BlogPostCard({ post, index }: { post: BlogPost; index: number }): JSX.Element {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -122,7 +122,7 @@ function BlogPostCard({ post, index }: { post: BlogPost; index: number }) {
   );
 }
 
-export default function BlogPage() {
+export default function BlogPage(): JSX.Element {
   return (
     <PageLayout
       title="LongBio Blog"

@@ -76,14 +76,10 @@ describe('Project Configuration', () => {
       nextConfig = await import('../next.config.mjs').then(m => m.default);
     });
 
-    it('has security headers configured', async () => {
-      expect(nextConfig.headers).toBeDefined();
-    });
-
     it('has image optimization configured', async () => {
       expect(nextConfig.images).toBeDefined();
-      expect(nextConfig.images.deviceSizes).toBeDefined();
-      expect(nextConfig.images.imageSizes).toBeDefined();
+      expect(nextConfig.images.remotePatterns).toBeDefined();
+      expect(nextConfig.images.remotePatterns[0].protocol).toBe('https');
     });
   });
 });

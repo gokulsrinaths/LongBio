@@ -19,7 +19,7 @@ interface MilestoneUpdate {
   description: string;
 }
 
-export default function TransparencyPage() {
+export default function TransparencyPage(): JSX.Element {
   const fundingSources: FundingSource[] = [
     {
       name: 'National Science Foundation',

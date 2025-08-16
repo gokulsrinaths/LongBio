@@ -8,7 +8,7 @@ import { DatabaseNav } from '@/components/database/DatabaseNav';
 import { databaseConfig } from '@/config/database';
 import type { DatabaseView } from '@/config/database';
 
-export default function DatabasePage() {
+export default function DatabasePage(): JSX.Element {
   const [activeView, setActiveView] = useState<DatabaseView>('companies');
 
   return (

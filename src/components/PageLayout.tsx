@@ -10,7 +10,7 @@ interface PageLayoutProps {
   showStats?: boolean;
 }
 
-export default function PageLayout({ children, title, subtitle, showStats = false }: PageLayoutProps) {
+export default function PageLayout({ children, title, subtitle, _showStats = false }: PageLayoutProps): JSX.Element {
   return (
     <div className="min-h-screen bg-blue-950">
       {/* Page Header */}

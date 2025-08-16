@@ -51,7 +51,7 @@ describe('Project Configuration', () => {
     });
   });
 
-  describe('tailwind.config.mjs', () => {
+  describe('tailwind.config.mjs', async () => {
     const tailwindConfig = await import('../tailwind.config.mjs').then(m => m.default);
 
     it('has required plugins configured', async () => {
@@ -65,7 +65,7 @@ describe('Project Configuration', () => {
     });
   });
 
-  describe('next.config.mjs', () => {
+  describe('next.config.mjs', async () => {
     const nextConfig = await import('../next.config.mjs').then(m => m.default);
 
     it('has security headers configured', async () => {

@@ -43,8 +43,8 @@ export function FilterBar({ onFilterChange, onSearch, activeFilters }: FilterBar
     onSearch(value);
   };
 
-  const toggleFilter = (type: keyof Filter, value: any) => {
-    const currentValues = activeFilters[type] as any[] || [];
+  const toggleFilter = (type: keyof Filter, value: CompanyType | FundingStage) => {
+    const currentValues = (activeFilters[type] as (CompanyType | FundingStage)[]) || [];
     const newValues = currentValues.includes(value)
       ? currentValues.filter(v => v !== value)
       : [...currentValues, value];

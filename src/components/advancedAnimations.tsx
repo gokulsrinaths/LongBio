@@ -18,12 +18,12 @@ export const ParallaxCard: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const rotateX = useTransform(
-    useMotionTemplate`${mousePosition.y}`,
+    useMotionValue(mousePosition.y),
     [0, 1],
     [-10, 10]
   );
   const rotateY = useTransform(
-    useMotionTemplate`${mousePosition.x}`,
+    useMotionValue(mousePosition.x),
     [0, 1],
     [10, -10]
   );

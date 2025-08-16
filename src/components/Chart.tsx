@@ -14,7 +14,7 @@ interface ChartProps {
   title: string;
 }
 
-export default function Chart({ data, type, _title }: ChartProps): JSX.Element {
+export default function Chart({ data, type, title: _ }: ChartProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

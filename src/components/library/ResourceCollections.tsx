@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Button as _Button } from '@/components/ui/Button';
 
 interface Collection {
   id: string;

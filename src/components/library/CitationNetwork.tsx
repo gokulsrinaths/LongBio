@@ -27,10 +27,10 @@ interface CitationNetworkProps {
 export default function CitationNetwork({
   nodes,
   edges,
-  onNodeClick,
-  onEdgeClick,
+  _onNodeClick,
+  _onEdgeClick,
 }: CitationNetworkProps) {
-  const [zoom, setZoom] = useState(1);
+  const [_zoom, setZoom] = useState(1);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev + 0.2, 2));

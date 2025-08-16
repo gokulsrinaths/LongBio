@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FuturisticText } from './advancedAnimations';
+import { FuturisticText as _FuturisticText } from './advancedAnimations';
 import { easings } from './animations';
 
 interface VideoCardProps {

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { colors, typography } from '@/styles/theme';
+import { colors as _colors, typography } from '@/styles/theme';
 
 interface NavItem {
   name: string;

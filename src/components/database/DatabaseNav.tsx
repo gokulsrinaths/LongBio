@@ -12,7 +12,7 @@ interface DatabaseButtonProps {
   onClick: () => void;
 }
 
-function DatabaseButton({ url, label, description, isActive, onClick }: DatabaseButtonProps) {
+function DatabaseButton({ _url, label, description, isActive, onClick }: DatabaseButtonProps): JSX.Element {
   return (
     <motion.button
       onClick={onClick}

@@ -30,7 +30,7 @@ export default function InteractivePaperViewer({
   notes,
   highlights,
   onAddNote,
-  onAddHighlight,
+  _onAddHighlight,
 }: InteractivePaperViewerProps) {
   const [selectedNote, setSelectedNote] = useState<string | null>(null);
   const [newNoteContent, setNewNoteContent] = useState('');

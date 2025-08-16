@@ -7,9 +7,10 @@ interface PageLayoutProps {
   children: ReactNode;
   title: string;
   subtitle?: string;
+  showStats?: boolean;
 }
 
-export default function PageLayout({ children, title, subtitle }: PageLayoutProps) {
+export default function PageLayout({ children, title, subtitle, showStats = false }: PageLayoutProps) {
   return (
     <div className="min-h-screen bg-blue-950">
       {/* Page Header */}

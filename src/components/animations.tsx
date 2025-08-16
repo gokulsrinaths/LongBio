@@ -2,7 +2,7 @@ import { motion, Variants, Transition, Easing } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 
 // Enhanced easing curves for more natural motion
-const easings = {
+export const easings = {
   smooth: [0.4, 0.0, 0.2, 1], // Material Design standard easing
   spring: [0.175, 0.885, 0.32, 1.275], // Custom spring physics
   decelerate: [0, 0, 0.2, 1], // Smooth deceleration

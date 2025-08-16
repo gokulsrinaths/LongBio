@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { motion } from 'framer-motion';
 
-export default function AboutPage() {
+export default function AboutPage(): JSX.Element {
   const stripeSupportUrl = process.env.NEXT_PUBLIC_STRIPE_DONATE_URL;
   return (
     <PageLayout

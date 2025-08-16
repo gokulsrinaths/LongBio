@@ -15,13 +15,13 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { QuickNav } from '@/components/QuickNav';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-function ResourceGrid() {
+function ResourceGrid(): JSX.Element {
   const resources = [
     {
       title: 'LongBio Database',
       description: 'Comprehensive directory of People, Companies, and Investors in longevity',
       href: '/database',
-      icon: (props: any) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
         </svg>
@@ -31,7 +31,7 @@ function ResourceGrid() {
       title: 'Library',
       description: 'Access to papers, books, courses, videos, podcasts, and journals',
       href: '/library',
-      icon: (props: any) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
@@ -41,7 +41,7 @@ function ResourceGrid() {
       title: 'Events',
       description: 'Conferences and gatherings in the longevity space',
       href: '/events',
-      icon: (props: any) => (
+      icon: (props: React.SVGProps<SVGSVGElement>) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
@@ -133,7 +133,7 @@ function ResourceGrid() {
   );
 }
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -255,7 +255,7 @@ export default function Home() {
             </ParallaxScrollReveal>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-              {['GCLS', 'LBF'].map((name, i) => (
+              {['GCLS', 'LBF'].map((name, _i) => (
                 <SponsorCardAnimation key={name}>
                   <div 
                     className="group relative aspect-square"

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-function ExternalLinkIcon({ className = "h-4 w-4" }: { className?: string }) {
+function ExternalLinkIcon({ className = "h-4 w-4" }: { className?: string }): JSX.Element {
   return (
     <svg 
       className={className} 
@@ -24,7 +24,7 @@ function ExternalLinkIcon({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-function NewsletterForm() {
+function NewsletterForm(): JSX.Element {
   return (
     <form className="mt-6" onSubmit={(e) => e.preventDefault()}>
       <div className="flex gap-2">
@@ -50,14 +50,14 @@ function NewsletterForm() {
   );
 }
 
-function FooterSection({ 
+function FooterSection({
   title, 
   links 
 }: { 
   title: string; 
   links: { href: string; text: string; external?: boolean }[] 
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const _shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
@@ -95,8 +95,8 @@ function FooterSection({
   );
 }
 
-function SocialLinks() {
-  const shouldReduceMotion = useReducedMotion();
+function SocialLinks(): JSX.Element {
+  const _shouldReduceMotion = useReducedMotion();
   
   const socialLinks = [
     { href: 'https://twitter.com/longbioinst', icon: 'twitter', label: 'Twitter' },
@@ -139,8 +139,8 @@ function SocialLinks() {
   );
 }
 
-export default function Footer() {
-  const shouldReduceMotion = useReducedMotion();
+export default function Footer(): JSX.Element {
+  const _shouldReduceMotion = useReducedMotion();
   const currentYear = new Date().getFullYear();
 
   const footerSections = [

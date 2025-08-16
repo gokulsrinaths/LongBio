@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-function validateDependencies() {
+async function validateDependencies(): Promise<boolean> {
   try {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-    const tailwindConfig = require('../tailwind.config.js');
+    const { default: tailwindConfig } = await import('../tailwind.config.js');
     
     // Required dependencies
     const requiredDeps = {
@@ -49,14 +49,14 @@ function validateDependencies() {
     ];
 
     // Check if plugins are installed in node_modules
-    const missingPlugins = requiredPlugins.filter(plugin => {
+    const missingPlugins = await Promise.all(requiredPlugins.map(async (plugin) => {
       try {
-        require.resolve(plugin);
+        await import(plugin);
         return false;
       } catch (error) {
         return true;
       }
-    });
+    })).filter(Boolean);
 
     if (missingDeps.length > 0) {
       console.error('❌ Missing dependencies:', missingDeps.join(', '));
@@ -80,4 +80,7 @@ function validateDependencies() {
   }
 }
 
-validateDependencies();
+validateDependencies().catch(error => {
+  console.error('❌ Validation failed:', error);
+  process.exit(1);
+});

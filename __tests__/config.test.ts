@@ -51,8 +51,12 @@ describe('Project Configuration', () => {
     });
   });
 
-  describe('tailwind.config.mjs', async () => {
-    const tailwindConfig = await import('../tailwind.config.mjs').then(m => m.default);
+  describe('tailwind.config.mjs', () => {
+    let tailwindConfig: any;
+
+    beforeAll(async () => {
+      tailwindConfig = await import('../tailwind.config.mjs').then(m => m.default);
+    });
 
     it('has required plugins configured', async () => {
       expect(tailwindConfig.plugins).toHaveLength(3);
@@ -65,8 +69,12 @@ describe('Project Configuration', () => {
     });
   });
 
-  describe('next.config.mjs', async () => {
-    const nextConfig = await import('../next.config.mjs').then(m => m.default);
+  describe('next.config.mjs', () => {
+    let nextConfig: any;
+
+    beforeAll(async () => {
+      nextConfig = await import('../next.config.mjs').then(m => m.default);
+    });
 
     it('has security headers configured', async () => {
       expect(nextConfig.headers).toBeDefined();

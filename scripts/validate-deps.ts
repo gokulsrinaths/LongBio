@@ -4,7 +4,7 @@ import path from 'path';
 async function validateDependencies(): Promise<boolean> {
   try {
     const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-    const tailwindConfig = await import('../tailwind.config.js').then(m => m.default);
+    const tailwindConfig = await import('../tailwind.config.mjs').then(m => m.default);
     
     // Required dependencies
     const requiredDeps = {

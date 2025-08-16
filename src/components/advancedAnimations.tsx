@@ -76,7 +76,7 @@ export const MagneticButton: FC<{ children: ReactNode }> = ({ children }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      animate={{
+      style={{
         x: isHovered ? xSpring : 0,
         y: isHovered ? ySpring : 0,
       }}

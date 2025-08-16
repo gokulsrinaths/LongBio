@@ -1,7 +1,7 @@
 'use client';
 
+import React, { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface PageLayoutProps {
   showStats?: boolean;
 }
 
-export default function PageLayout({ children, title, subtitle, showStats: _ = false }: PageLayoutProps): JSX.Element {
+export default function PageLayout({ children, title, subtitle, _showStats = false }: PageLayoutProps): JSX.Element {
   return (
     <div className="min-h-screen bg-blue-950">
       {/* Page Header */}
@@ -63,4 +63,4 @@ export default function PageLayout({ children, title, subtitle, showStats: _ = f
       </motion.div>
     </div>
   );
-}
+} 

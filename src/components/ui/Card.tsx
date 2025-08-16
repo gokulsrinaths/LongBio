@@ -1,31 +1,37 @@
 'use client';
 
+import React from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const cardVariants = cva(
-  'relative rounded-2xl overflow-hidden transition-all duration-300',
+  // Base styles
+  'rounded-lg overflow-hidden',
   {
     variants: {
       variant: {
-        default: 'bg-white/10 backdrop-blur-sm',
-        solid: 'bg-blue-950',
-        glass: 'bg-white/5 backdrop-blur-sm',
+        default: 'bg-white border border-primary-navy-100',
+        elevated: 'bg-white shadow-lg',
+        filled: 'bg-primary-navy-50',
+        outlined: 'border-2 border-primary-navy-200',
+        glass: 'bg-white/10 backdrop-blur-md border border-white/20',
       },
-      size: {
+      padding: {
+        none: '',
         sm: 'p-4',
         md: 'p-6',
         lg: 'p-8',
       },
       hover: {
         none: '',
-        lift: 'hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/10',
-        glow: 'hover:shadow-lg hover:shadow-blue-500/20 hover:bg-white/15',
+        lift: 'transition-all duration-300 hover:-translate-y-1 hover:shadow-lg',
+        glow: 'transition-all duration-300 hover:shadow-lg hover:shadow-primary-navy-100/50',
+        scale: 'transition-all duration-300 hover:scale-[1.02]',
       },
     },
     defaultVariants: {
       variant: 'default',
-      size: 'md',
+      padding: 'md',
       hover: 'none',
     },
   }
@@ -38,23 +44,39 @@ export interface CardProps
   href?: string;
 }
 
-export function Card({
-  className,
-  variant,
-  size,
-  hover,
-  isInteractive = false,
-  children,
-  ...props
-}: CardProps): JSX.Element {
-  return (
-    <motion.div
-      className={cardVariants({ variant, size, hover, className })}
-      whileHover={isInteractive ? { scale: 1.02 } : undefined}
-      whileTap={isInteractive ? { scale: 0.98 } : undefined}
-      {...props}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const Card = React.forwardRef<HTMLDivElement, CardProps & { ref?: React.Ref<HTMLDivElement> }>(
+  (
+    {
+      className,
+      variant,
+      padding,
+      hover,
+      isInteractive = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const Component = (isInteractive ? motion.div : 'div') as typeof motion.div;
+
+    return (
+      <Component
+        ref={ref}
+        className={cardVariants({ variant, padding, hover, className })}
+        whileHover={isInteractive ? "hover" : undefined}
+        whileTap={isInteractive ? "tap" : undefined}
+        variants={{
+          hover: { scale: 1.02 },
+          tap: { scale: 0.98 }
+        }}
+        {...props}
+      >
+        {children}
+      </Component>
+    );
+  }
+);
+
+Card.displayName = 'Card';
+
+export { Card, cardVariants };

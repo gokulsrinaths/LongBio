@@ -1,4 +1,4 @@
-import { motion, Variants, Transition, Easing } from 'framer-motion';
+import { motion, Variants, Transition, Easing as _Easing } from 'framer-motion';
 import { FC, ReactNode } from 'react';
 
 // Enhanced easing curves for more natural motion

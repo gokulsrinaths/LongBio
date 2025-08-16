@@ -10,7 +10,7 @@ interface ResourceCardProps {
   title: string;
   description: string;
   href: string;
-  icon: (props: any) => JSX.Element;
+  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
   isNew?: boolean;
 }
 

@@ -127,7 +127,7 @@ export default function TransparencyPage() {
             Research Milestones
           </h2>
           <div className="space-y-8">
-            {milestones.map((milestone, index) => (
+            {milestones.map((milestone, _index) => (
               <div
                 key={milestone.title}
                 className="relative pl-8 pb-8 border-l-2 border-blue-200 last:pb-0"

@@ -11,7 +11,7 @@ interface AnimationContextType {
 const AnimationContext = createContext<AnimationContextType>({
   reducedMotion: false,
   enableAnimations: true,
-  toggleAnimations: () => {},
+  toggleAnimations: () => { /* Default implementation, will be replaced by provider */ },
 });
 
 export const useAnimation = (): AnimationContextType => useContext(AnimationContext);

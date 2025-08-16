@@ -1,7 +1,7 @@
 'use client';
 
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue, MotionValue } from 'framer-motion';
-import React, { FC, ReactNode, useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue, MotionValue as _MotionValue } from 'framer-motion';
+import React, { FC, ReactNode, useRef, useState } from 'react';
 import { easings } from './animations';
 
 // Futuristic 3D card effect

@@ -27,8 +27,8 @@ interface CitationNetworkProps {
 export default function CitationNetwork({
   nodes,
   edges,
-  _onNodeClick,
-  _onEdgeClick,
+  onNodeClick: _onNodeClick,
+  onEdgeClick: _onEdgeClick,
 }: CitationNetworkProps) {
   const [_zoom, setZoom] = useState(1);
 

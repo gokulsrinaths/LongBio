@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function CompaniesPage(): JSX.Element {
+export default function CompaniesPage() {
   return (
     <main className="min-h-screen pt-24">
       {/* Header */}

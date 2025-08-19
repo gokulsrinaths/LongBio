@@ -51,18 +51,14 @@ describe('Project Configuration', () => {
     });
   });
 
-  describe('tailwind.config.mjs', () => {
-    let tailwindConfig: any;
+  describe('tailwind.config.js', () => {
+    const tailwindConfig = require('../tailwind.config.js');
 
-    beforeAll(async () => {
-      tailwindConfig = await import('../tailwind.config.mjs').then(m => m.default);
-    });
-
-    it('has required plugins configured', async () => {
+    it('has required plugins configured', () => {
       expect(tailwindConfig.plugins).toHaveLength(3);
     });
 
-    it('has required theme extensions', async () => {
+    it('has required theme extensions', () => {
       expect(tailwindConfig.theme.extend).toHaveProperty('colors');
       expect(tailwindConfig.theme.extend).toHaveProperty('fontFamily');
       expect(tailwindConfig.theme.extend).toHaveProperty('fontSize');
@@ -70,16 +66,16 @@ describe('Project Configuration', () => {
   });
 
   describe('next.config.mjs', () => {
-    let nextConfig: any;
+    const nextConfig = require('../next.config.mjs').default;
 
-    beforeAll(async () => {
-      nextConfig = await import('../next.config.mjs').then(m => m.default);
+    it('has security headers configured', () => {
+      expect(nextConfig.headers).toBeDefined();
     });
 
-    it('has image optimization configured', async () => {
+    it('has image optimization configured', () => {
       expect(nextConfig.images).toBeDefined();
-      expect(nextConfig.images.remotePatterns).toBeDefined();
-      expect(nextConfig.images.remotePatterns[0].protocol).toBe('https');
+      expect(nextConfig.images.deviceSizes).toBeDefined();
+      expect(nextConfig.images.imageSizes).toBeDefined();
     });
   });
 });

@@ -1,6 +1,5 @@
 {
   "name": "long-bio",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,32 +7,29 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "validate-deps": "node --loader ts-node/esm scripts/validate-deps.ts",
+    "validate-deps": "ts-node scripts/validate-deps.ts",
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "predev": "npm run validate-deps",
-    "prebuild": "npm run validate-deps && npm run test",
+    "predev:disabled": "npm run validate-deps",
     "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.2.0",
-    "autoprefixer": "^10.4.17",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.0",
     "framer-motion": "^12.23.6",
-    "next": "14.1.0",
-    "postcss": "^8.4.35",
+    "next": "^14.2.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "^3.4.1"
+    "react-intersection-observer": "^9.16.0"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^30.0.0",

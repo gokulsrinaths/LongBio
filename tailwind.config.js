@@ -1,9 +1,9 @@
-import typography from '@tailwindcss/typography';
-import forms from '@tailwindcss/forms';
-import aspectRatio from '@tailwindcss/aspect-ratio';
+const typography = require('@tailwindcss/typography');
+const forms = require('@tailwindcss/forms');
+const aspectRatio = require('@tailwindcss/aspect-ratio');
 
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,7 +13,6 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
       },
       fontSize: {
         xs: ['0.75rem', { lineHeight: '1rem' }],

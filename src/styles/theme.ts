@@ -70,8 +70,8 @@ export const colors = {
 export const typography = {
   // Font Families
   fontFamily: {
-    sans: '"Inter", system-ui, -apple-system, sans-serif',
-    serif: '"Newsreader", Georgia, serif',
+    sans: 'var(--font-inter), system-ui, -apple-system, sans-serif',
+    serif: 'var(--font-merriweather), Georgia, serif',
   },
   // Font Sizes
   fontSize: {

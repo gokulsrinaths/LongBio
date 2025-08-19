@@ -11,10 +11,10 @@ interface AnimationContextType {
 const AnimationContext = createContext<AnimationContextType>({
   reducedMotion: false,
   enableAnimations: true,
-  toggleAnimations: () => { /* Default implementation, will be replaced by provider */ },
+  toggleAnimations: () => {},
 });
 
-export const useAnimation = (): AnimationContextType => useContext(AnimationContext);
+export const useAnimation = () => useContext(AnimationContext);
 
 export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [enableAnimations, setEnableAnimations] = useState(true);
@@ -25,7 +25,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setReducedMotion(mediaQuery.matches);
 
-    const handleChange = (e: MediaQueryListEvent): void => {
+    const handleChange = (e: MediaQueryListEvent) => {
       setReducedMotion(e.matches);
     };
 
@@ -33,7 +33,7 @@ export const AnimationProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const toggleAnimations = (): void => {
+  const toggleAnimations = () => {
     setEnableAnimations((prev) => !prev);
   };
 

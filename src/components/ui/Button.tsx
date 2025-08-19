@@ -42,7 +42,6 @@ export interface ButtonProps
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  href?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps & { ref?: React.Ref<HTMLButtonElement> }>(

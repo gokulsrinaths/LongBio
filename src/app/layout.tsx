@@ -5,7 +5,10 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import AnimationWrapper from '@/components/AnimationWrapper'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'LongBio Institute',
@@ -40,4 +43,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-} 
+}

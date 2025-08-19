@@ -41,7 +41,6 @@ export interface CardProps
   extends Omit<HTMLMotionProps<"div">, keyof VariantProps<typeof cardVariants>>,
     VariantProps<typeof cardVariants> {
   isInteractive?: boolean;
-  href?: string;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps & { ref?: React.Ref<HTMLDivElement> }>(

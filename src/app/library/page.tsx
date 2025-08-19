@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import PageLayout from '@/components/PageLayout';
 import { libraryResources } from '@/data/library';
 
-export default function LibraryPage(): JSX.Element {
+export default function LibraryPage() {
   return (
     <PageLayout
       title="Knowledge Library"
@@ -98,7 +98,7 @@ export default function LibraryPage(): JSX.Element {
 }
 
 // Components remain the same
-function Section({ title, children }: { title: string; children: React.ReactNode }): JSX.Element {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -117,7 +117,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function ResourceGrid({ children }: { children: React.ReactNode }): JSX.Element {
+function ResourceGrid({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {children}
@@ -125,7 +125,7 @@ function ResourceGrid({ children }: { children: React.ReactNode }): JSX.Element 
   );
 }
 
-function ResourceCard({ resource }: { resource: typeof libraryResources.pdfs[0] }): JSX.Element {
+function ResourceCard({ resource }: { resource: typeof libraryResources.pdfs[0] }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

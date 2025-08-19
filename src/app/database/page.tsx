@@ -1,14 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { motion as _motion } from 'framer-motion';
 import PageLayout from '@/components/PageLayout';
 import { AirtableEmbed } from '@/components/database/AirtableEmbed';
 import { DatabaseNav } from '@/components/database/DatabaseNav';
 import { databaseConfig } from '@/config/database';
 import type { DatabaseView } from '@/config/database';
 
-export default function DatabasePage(): JSX.Element {
+export default function DatabasePage() {
   const [activeView, setActiveView] = useState<DatabaseView>('companies');
 
   return (

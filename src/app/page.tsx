@@ -3,15 +3,25 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { 
+  TextRevealWithChars,
+  SponsorCardAnimation,
+  ParallaxScrollReveal,
+  resourceCardInteraction,
+  ButtonInteraction
+} from '@/components/animations';
+import { HeroBackground } from '@/components/HeroBackground';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { QuickNav } from '@/components/QuickNav';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-function ResourceGrid(): JSX.Element {
+function ResourceGrid() {
   const resources = [
     {
       title: 'LongBio Database',
       description: 'Comprehensive directory of People, Companies, and Investors in longevity',
       href: '/database',
-      icon: (props: React.SVGProps<SVGSVGElement>) => (
+      icon: (props: any) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
         </svg>
@@ -21,7 +31,7 @@ function ResourceGrid(): JSX.Element {
       title: 'Library',
       description: 'Access to papers, books, courses, videos, podcasts, and journals',
       href: '/library',
-      icon: (props: React.SVGProps<SVGSVGElement>) => (
+      icon: (props: any) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
@@ -31,7 +41,7 @@ function ResourceGrid(): JSX.Element {
       title: 'Events',
       description: 'Conferences and gatherings in the longevity space',
       href: '/events',
-      icon: (props: React.SVGProps<SVGSVGElement>) => (
+      icon: (props: any) => (
         <svg {...props} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
@@ -47,10 +57,11 @@ function ResourceGrid(): JSX.Element {
         <motion.div
           key={resource.title}
           className="group relative"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
-          whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+          variants={resourceCardInteraction}
+          initial="initial"
+          whileInView="inView"
+          whileHover={shouldReduceMotion ? {} : "hover"}
+          whileTap={shouldReduceMotion ? {} : "tap"}
           viewport={{ once: true }}
           transition={{ delay: index * 0.2 }}
         >
@@ -83,36 +94,38 @@ function ResourceGrid(): JSX.Element {
             </p>
 
             {/* Animated link */}
-            <Link 
-              href={resource.href}
-              className="inline-flex items-center text-blue-400 hover:text-blue-300"
-              aria-label={`Explore ${resource.title}`}
-            >
-              <span className="relative">
-                Explore
-                <motion.span
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400/50"
-                  initial={{ scaleX: 0, originX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </span>
-              <motion.svg 
-                className="w-4 h-4 ml-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                animate={shouldReduceMotion ? {} : { x: [0, 4, 0] }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                aria-hidden="true"
+            <ButtonInteraction>
+              <Link 
+                href={resource.href}
+                className="inline-flex items-center text-blue-400 hover:text-blue-300"
+                aria-label={`Explore ${resource.title}`}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </motion.svg>
-            </Link>
+                <span className="relative">
+                  Explore
+                  <motion.span
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-400/50"
+                    initial={{ scaleX: 0, originX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </span>
+                <motion.svg 
+                  className="w-4 h-4 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  animate={shouldReduceMotion ? {} : { x: [0, 4, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </motion.svg>
+              </Link>
+            </ButtonInteraction>
           </div>
         </motion.div>
       ))}
@@ -120,7 +133,7 @@ function ResourceGrid(): JSX.Element {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -132,19 +145,7 @@ export default function Home(): JSX.Element {
         aria-label="Hero section"
       >
         {/* Animated background gradient */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-blue-950"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <motion.div
-            className="absolute inset-0 bg-blue-950/30 backdrop-blur-[2px]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          />
-        </motion.div>
+        <HeroBackground />
         
         <div className="relative max-w-[1000px] mx-auto px-6 sm:px-8 lg:px-12 text-center">
           <motion.div
@@ -183,7 +184,7 @@ export default function Home(): JSX.Element {
               }}
               aria-label="Advancing the field of Longevity Biotech"
             >
-                              <span>Advancing the field of Longevity Biotech</span>
+              <span>Advancing the field of Longevity Biotech</span>
             </motion.h1>
           </motion.div>
         </div>
@@ -204,100 +205,77 @@ export default function Home(): JSX.Element {
         />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.h2
-              className="text-2xl sm:text-3xl font-semibold mb-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Sponsors & Collaborators
-            </motion.h2>
-            <p className="text-blue-200 text-lg">
-              Working together to advance longevity research
-            </p>
-          </motion.div>
+          <ParallaxScrollReveal>
+            <div className="text-center mb-16">
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-3">
+                <TextRevealWithChars text="Sponsors & Collaborators" />
+              </h2>
+              <p className="text-blue-200 text-lg">
+                Working together to advance longevity research
+              </p>
+            </div>
+          </ParallaxScrollReveal>
 
           {/* Platinum Tier */}
           <div className="mb-16">
-            <motion.h3
-              className="text-lg text-blue-300 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Platinum Partners
-            </motion.h3>
+            <ParallaxScrollReveal offset={20}>
+              <h3 className="text-lg text-blue-300 mb-8 text-center">
+                Platinum Partners
+              </h3>
+            </ParallaxScrollReveal>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {[1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={i}
-                  className="group relative aspect-[3/2] p-6"
-                  role="img"
-                  aria-label={`Platinum Partner ${i}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                >
-                  <div className="absolute inset-0 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20" />
-                  <motion.div 
-                    className="relative w-full h-full bg-gradient-to-br from-white/5 to-white/10 rounded-lg"
-                    whileHover={shouldReduceMotion ? {} : {
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-                      transition: { duration: 0.3 }
-                    }}
-                  />
-                </motion.div>
+              {[1, 2, 3, 4].map((_i) => (
+                <SponsorCardAnimation key={_i}>
+                  <div 
+                    className="group relative aspect-[3/2] p-6"
+                    role="img"
+                    aria-label={`Platinum Partner ${_i}`}
+                  >
+                    <div className="absolute inset-0 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20" />
+                    <motion.div 
+                      className="relative w-full h-full bg-gradient-to-br from-white/5 to-white/10 rounded-lg"
+                      whileHover={shouldReduceMotion ? {} : {
+                        boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+                        transition: { duration: 0.3 }
+                      }}
+                    />
+                  </div>
+                </SponsorCardAnimation>
               ))}
             </div>
           </div>
 
           {/* Institutional Collaborators */}
           <div>
-            <motion.h3
-              className="text-lg text-blue-300 mb-8 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Institutional Collaborators
-            </motion.h3>
+            <ParallaxScrollReveal offset={20}>
+              <h3 className="text-lg text-blue-300 mb-8 text-center">
+                Institutional Collaborators
+              </h3>
+            </ParallaxScrollReveal>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-              {['GCLS', 'LBF'].map((name, _i) => (
-                <motion.div
-                  key={name}
-                  className="group relative aspect-square"
-                  role="img"
-                  aria-label={`${name} logo`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="absolute inset-0 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20" />
-                  <div className="relative h-full flex items-center justify-center">
-                    <motion.span 
-                      className="text-xl font-semibold bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent"
-                      whileHover={shouldReduceMotion ? {} : {
-                        scale: 1.05,
-                        transition: { duration: 0.2 }
-                      }}
-                    >
-                      {name}
-                    </motion.span>
+              {['GCLS', 'LBF'].map((name, i) => (
+                <SponsorCardAnimation key={name}>
+                  <div 
+                    className="group relative aspect-square"
+                    role="img"
+                    aria-label={`${name} logo`}
+                  >
+                    <div className="absolute inset-0 bg-white/5 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20" />
+                    <div className="relative h-full flex items-center justify-center">
+                      <motion.span 
+                        className="text-xl font-semibold bg-gradient-to-r from-blue-200 to-white bg-clip-text text-transparent"
+                        whileHover={shouldReduceMotion ? {} : {
+                          scale: 1.05,
+                          transition: { duration: 0.2 }
+                        }}
+                      >
+                        {name}
+                      </motion.span>
+                    </div>
                   </div>
-                </motion.div>
+                </SponsorCardAnimation>
               ))}
             </div>
           </div>
@@ -319,59 +297,25 @@ export default function Home(): JSX.Element {
         />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.h2
-              className="text-2xl sm:text-3xl font-semibold mb-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Resources
-            </motion.h2>
-            <p className="text-blue-200 text-lg max-w-2xl mx-auto">
-              Access our comprehensive collection of longevity research resources
-            </p>
-          </motion.div>
-
-          <Suspense fallback={
-            <div className="flex items-center justify-center h-32">
-              <motion.div
-                className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
+          <ParallaxScrollReveal>
+            <div className="text-center mb-16">
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-3">
+                <TextRevealWithChars text="Resources" />
+              </h2>
+              <p className="text-blue-200 text-lg max-w-2xl mx-auto">
+                Access our comprehensive collection of longevity research resources
+              </p>
             </div>
-          }>
+          </ParallaxScrollReveal>
+
+          <Suspense fallback={<LoadingSpinner size="lg" />}>
             <ResourceGrid />
           </Suspense>
         </div>
       </section>
 
       {/* Quick Navigation */}
-      <motion.div
-        className="fixed bottom-8 right-8 z-50"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1 }}
-      >
-        <motion.button
-          className="bg-blue-500 text-white rounded-full p-3 shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-950"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Scroll to top"
-        >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-          </svg>
-        </motion.button>
-      </motion.div>
+      <QuickNav />
     </main>
   );
 }

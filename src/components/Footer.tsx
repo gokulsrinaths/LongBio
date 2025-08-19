@@ -140,7 +140,7 @@ function SocialLinks() {
 }
 
 export default function Footer() {
-  const shouldReduceMotion = useReducedMotion();
+  const _shouldReduceMotion = useReducedMotion();
   const currentYear = new Date().getFullYear();
 
   const footerSections = [

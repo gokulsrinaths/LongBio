@@ -255,7 +255,7 @@ export default function Home() {
             </ParallaxScrollReveal>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-              {['GCLS', 'LBF'].map((name, i) => (
+              {['GCLS', 'LBF'].map((name, _i) => (
                 <SponsorCardAnimation key={name}>
                   <div 
                     className="group relative aspect-square"

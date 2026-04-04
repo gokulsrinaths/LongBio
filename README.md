@@ -1,4 +1,4 @@
-# LongBio Institute Website
+# LongBio Institute Website 
 
 A modern, minimalist website for the LongBio Institute built with Next.js and Tailwind CSS. The website showcases the institute's mission, research database, educational resources, events, and membership options.
 
